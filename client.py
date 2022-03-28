@@ -36,7 +36,13 @@ async def on_ready():
 	time.sleep(1)
 
 if __name__ == "__main__":
-	if len(sys.argv) < 2:
-		print("Usage: python client.py <token>")
-		sys.exit(1)
-	client.run(sys.argv[1], bot=False)
+	usage = "Usage: python client.py <token>\noptional arguments:\n\t-b, --bot\tprovided token is for a bot"
+	if len(sys.argv) == 3:
+		if sys.argv[2] == "-b" or sys.argv[2] == "--bot":
+			client.run(sys.argv[1], bot=True)
+		else:
+			print(usage)
+	elif len(sys.argv) == 2:
+		client.run(sys.argv[1], bot=False)
+	else:
+		print(usage)
