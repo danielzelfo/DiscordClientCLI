@@ -1,6 +1,7 @@
 import sys
 import discord
 import time
+import argparse
 
 client = discord.Client()
 
@@ -36,13 +37,9 @@ async def on_ready():
 	time.sleep(1)
 
 if __name__ == "__main__":
-	usage = "Usage: python client.py <token>\noptional arguments:\n\t-b, --bot\tprovided token is for a bot"
-	if len(sys.argv) == 3:
-		if sys.argv[2] == "-b" or sys.argv[2] == "--bot":
-			client.run(sys.argv[1], bot=True)
-		else:
-			print(usage)
-	elif len(sys.argv) == 2:
-		client.run(sys.argv[1], bot=False)
-	else:
-		print(usage)
+	parser = argparse.ArgumentParser()
+	parser.add_argument("token", help="account token (user token by default)")
+	parser.add_argument("-b", "--bot", action="store_true", help="provided token is for a bot")
+	args = parser.parse_args()
+	
+	client.run(args.token, bot=args.bot)
